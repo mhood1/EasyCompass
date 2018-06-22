@@ -1,14 +1,24 @@
 package com.example.milesbot.easycompass;
 
+import android.app.Notification;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.os.Vibrator;
+import android.support.v4.app.NotificationCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
+
 
 public class Compass extends AppCompatActivity implements SensorEventListener {
 
@@ -32,7 +42,8 @@ public class Compass extends AppCompatActivity implements SensorEventListener {
         setContentView(R.layout.activity_compass);
 
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        txt_compass = (TextView) findViewById(R.id.txt_azimuth);
+        txt_compass = findViewById(R.id.txt_azimuth);
+
 
         start();
     }
@@ -70,42 +81,66 @@ public class Compass extends AppCompatActivity implements SensorEventListener {
 
         String direction = "NW";
 
-        if (mAzimuth >= 340 || mAzimuth <= 10)
+        if (mAzimuth >= 348 || mAzimuth <= 11)
         {
             direction = "N";
         }
-        if (mAzimuth < 340 && mAzimuth > 280)
+        if (mAzimuth < 348 && mAzimuth > 303)
         {
             direction = "NW";
         }
-        if (mAzimuth <= 280 && mAzimuth > 210)
+        if (mAzimuth <= 281 && mAzimuth > 258)
         {
             direction = "W";
         }
-        if (mAzimuth <= 210 && mAzimuth > 180)
+        if (mAzimuth <= 258 && mAzimuth > 191)
         {
             direction = "SW";
         }
-        if (mAzimuth <= 180 && mAzimuth > 140)
+        if (mAzimuth <= 191 && mAzimuth > 168)
         {
             direction = "S";
         }
-        if (mAzimuth <= 140 && mAzimuth > 100)
+        if (mAzimuth <= 168 && mAzimuth > 101)
         {
             direction = "SE";
         }
-        if (mAzimuth <= 100 && mAzimuth > 50)
+        if (mAzimuth <= 101 && mAzimuth > 78)
         {
             direction = "E";
         }
-        if (mAzimuth <=50 && mAzimuth > 10)
+        if (mAzimuth <=78 && mAzimuth > 11)
         {
             direction = "NE";
         }
 
         txt_compass.setText(mAzimuth + "° " + direction);
+        //Add direction to status bar using notifications
+        showNotification(direction);
 
     }
+
+    public void showNotification(String direction) {
+        Intent notifyIntent = new Intent(this, Compass.class);
+        notifyIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivities(this, 0,
+                new Intent[]{notifyIntent}, PendingIntent.FLAG_UPDATE_CURRENT);
+        Notification notification = new Notification.Builder(this)
+                .setSmallIcon(android.R.drawable.ic_dialog_info)
+                .setContentTitle(direction)
+                .setContentText("Click to go to App")
+                .setAutoCancel(false)
+                .setContentIntent(pendingIntent)
+                .build();
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        assert notificationManager != null;
+        notificationManager.notify(1, notification);
+
+    }
+
+
+
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
