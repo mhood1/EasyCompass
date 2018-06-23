@@ -81,35 +81,35 @@ public class Compass extends AppCompatActivity implements SensorEventListener {
 
         String direction = "NW";
 
-        if (mAzimuth >= 348 || mAzimuth <= 11)
+        if (mAzimuth >= 321 || mAzimuth <= 6)
         {
             direction = "N";
         }
-        if (mAzimuth < 348 && mAzimuth > 303)
+        if (mAzimuth < 321 && mAzimuth > 276)
         {
             direction = "NW";
         }
-        if (mAzimuth <= 281 && mAzimuth > 258)
+        if (mAzimuth <= 276 && mAzimuth > 231)
         {
             direction = "W";
         }
-        if (mAzimuth <= 258 && mAzimuth > 191)
+        if (mAzimuth <= 231 && mAzimuth > 186)
         {
             direction = "SW";
         }
-        if (mAzimuth <= 191 && mAzimuth > 168)
+        if (mAzimuth <= 186 && mAzimuth > 141)
         {
             direction = "S";
         }
-        if (mAzimuth <= 168 && mAzimuth > 101)
+        if (mAzimuth <= 141 && mAzimuth > 96)
         {
             direction = "SE";
         }
-        if (mAzimuth <= 101 && mAzimuth > 78)
+        if (mAzimuth <= 96 && mAzimuth > 51)
         {
             direction = "E";
         }
-        if (mAzimuth <=78 && mAzimuth > 11)
+        if (mAzimuth <=51 && mAzimuth > 6)
         {
             direction = "NE";
         }
@@ -129,7 +129,7 @@ public class Compass extends AppCompatActivity implements SensorEventListener {
                 .setSmallIcon(android.R.drawable.ic_dialog_info)
                 .setContentTitle(direction)
                 .setContentText("Click to go to App")
-                .setAutoCancel(false)
+                .setAutoCancel(true)
                 .setContentIntent(pendingIntent)
                 .build();
         NotificationManager notificationManager =
@@ -138,9 +138,6 @@ public class Compass extends AppCompatActivity implements SensorEventListener {
         notificationManager.notify(1, notification);
 
     }
-
-
-
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
@@ -200,7 +197,16 @@ public class Compass extends AppCompatActivity implements SensorEventListener {
                 mSensorManager.unregisterListener(this, mRotationV);
             }
         }
+        //cancelNote(getApplicationContext());
     }
+
+    /*
+    public static void cancelNote(Context context)
+    {
+        NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        nm.cancelAll();
+    }
+    */
 
     @Override
     protected void onPause()
