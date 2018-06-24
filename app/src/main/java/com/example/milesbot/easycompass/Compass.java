@@ -44,11 +44,8 @@ public class Compass extends AppCompatActivity implements SensorEventListener {
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         txt_compass = findViewById(R.id.txt_azimuth);
 
-
         start();
     }
-
-
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
@@ -81,40 +78,73 @@ public class Compass extends AppCompatActivity implements SensorEventListener {
 
         String direction = "NW";
 
-        if (mAzimuth >= 321 || mAzimuth <= 6)
+        if (mAzimuth >= 349 || mAzimuth <= 11)
         {
             direction = "N";
         }
-        if (mAzimuth < 321 && mAzimuth > 276)
+        if (mAzimuth <= 34 && mAzimuth > 11)
         {
-            direction = "NW";
+            direction = "NNE";
         }
-        if (mAzimuth <= 276 && mAzimuth > 231)
-        {
-            direction = "W";
-        }
-        if (mAzimuth <= 231 && mAzimuth > 186)
-        {
-            direction = "SW";
-        }
-        if (mAzimuth <= 186 && mAzimuth > 141)
-        {
-            direction = "S";
-        }
-        if (mAzimuth <= 141 && mAzimuth > 96)
-        {
-            direction = "SE";
-        }
-        if (mAzimuth <= 96 && mAzimuth > 51)
-        {
-            direction = "E";
-        }
-        if (mAzimuth <=51 && mAzimuth > 6)
+        if (mAzimuth <=56 && mAzimuth > 34)
         {
             direction = "NE";
         }
+        if (mAzimuth <= 79 && mAzimuth > 56)
+        {
+            direction = "ENE";
+        }
+        if (mAzimuth <= 101 && mAzimuth > 79)
+        {
+            direction = "E";
+        }
+        if (mAzimuth <= 124 && mAzimuth > 101)
+        {
+            direction = "ESE";
+        }
+        if (mAzimuth <= 146 && mAzimuth > 124)
+        {
+            direction = "SE";
+        }
+        if (mAzimuth <= 169 && mAzimuth > 146)
+        {
+            direction = "SSE";
+        }
+        if (mAzimuth <= 191 && mAzimuth > 169)
+        {
+            direction = "S";
+        }
+        if (mAzimuth <= 214 && mAzimuth > 191)
+        {
+            direction = "SSW";
+        }
+        if (mAzimuth <= 236 && mAzimuth > 214)
+        {
+            direction = "SW";
+        }
+        if (mAzimuth <= 259 && mAzimuth > 236)
+        {
+            direction = "WSW";
+        }
+        if (mAzimuth <= 281 && mAzimuth > 259)
+        {
+            direction = "W";
+        }
+        if (mAzimuth <= 304 && mAzimuth > 281)
+        {
+            direction = "WNW";
+        }
+        if (mAzimuth <= 326 && mAzimuth > 304)
+        {
+            direction = "NW";
+        }
+        if (mAzimuth < 349 && mAzimuth > 326 )
+        {
+            direction = "NNW";
+        }
 
-        txt_compass.setText(mAzimuth + "° " + direction);
+
+        txt_compass.setText(mAzimuth + "°\n" + direction);
         //Add direction to status bar using notifications
         showNotification(direction);
 
