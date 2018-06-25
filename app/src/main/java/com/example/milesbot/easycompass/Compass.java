@@ -121,21 +121,33 @@ public class Compass extends AppCompatActivity implements SensorEventListener {
 
     }
 
-    @TargetApi(Build.VERSION_CODES.O)
     public void showNotification(String direction) {
         Intent notifyIntent = new Intent(this, Compass.class);
         notifyIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivities(this, 0,
                 new Intent[]{notifyIntent}, PendingIntent.FLAG_UPDATE_CURRENT);
-        Notification notification = new Notification.Builder(this)
-                .setSmallIcon(android.R.drawable.ic_dialog_info)
-                .setContentTitle(direction)
-                .setContentText("Click to go to App")
-                .setAutoCancel(true)
-                .setContentIntent(pendingIntent)
-                .setChannelId("notify_001")
-                .setOnlyAlertOnce(true)
-                .build();
+        Notification notification = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            notification = new Notification.Builder(this, "notify_001")
+                    .setSmallIcon(android.R.drawable.ic_dialog_info)
+                    .setContentTitle(direction)
+                    .setContentText("Click to go to App")
+                    .setAutoCancel(true)
+                    .setContentIntent(pendingIntent)
+                    .setOnlyAlertOnce(true)
+                    .build();
+        }
+        else
+        {
+            notification = new Notification.Builder(this)
+                    .setSmallIcon(android.R.drawable.ic_dialog_info)
+                    .setContentTitle(direction)
+                    .setContentText("Click to go to App")
+                    .setAutoCancel(true)
+                    .setContentIntent(pendingIntent)
+                    .setOnlyAlertOnce(true)
+                    .build();
+        }
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -143,6 +155,7 @@ public class Compass extends AppCompatActivity implements SensorEventListener {
         {
             NotificationChannel channel = new NotificationChannel("notify_001", "Channel human readable title",
                     NotificationManager.IMPORTANCE_DEFAULT);
+            assert notificationManager != null;
             notificationManager.createNotificationChannel(channel);
         }
         assert notificationManager != null;
