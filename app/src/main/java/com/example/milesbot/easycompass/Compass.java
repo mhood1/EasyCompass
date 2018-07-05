@@ -79,43 +79,43 @@ public class Compass extends AppCompatActivity implements SensorEventListener {
 
         mAzimuth = Math.round(mAzimuth);
 
-        String direction = "NW";
+        String direction = "";
 
-        if (mAzimuth >= 349 || mAzimuth <= 11)
+        if (mAzimuth >= 337.5 || mAzimuth <= 22.5)
         {
             direction = "N";
         }
-        if (mAzimuth <=79 && mAzimuth > 11)
+        if (mAzimuth <=67.5 && mAzimuth > 22.5)
         {
             direction = "NE";
         }
-        if (mAzimuth <= 101 && mAzimuth > 79)
+        if (mAzimuth <= 112.5 && mAzimuth > 67.5)
         {
             direction = "E";
         }
-        if (mAzimuth <= 169 && mAzimuth > 101)
+        if (mAzimuth <= 157.5 && mAzimuth > 112.5)
         {
             direction = "SE";
         }
-        if (mAzimuth <= 191 && mAzimuth > 169)
+        if (mAzimuth <= 202.5 && mAzimuth > 157.5)
         {
             direction = "S";
         }
-        if (mAzimuth <= 259 && mAzimuth > 191)
+        if (mAzimuth <= 247.5 && mAzimuth > 202.5)
         {
             direction = "SW";
         }
-        if (mAzimuth <= 281 && mAzimuth > 259)
+        if (mAzimuth <= 292.5 && mAzimuth > 247.5)
         {
             direction = "W";
         }
-        if (mAzimuth < 349 && mAzimuth > 281)
+        if (mAzimuth < 337.5 && mAzimuth > 292.5)
         {
             direction = "NW";
         }
 
 
-        txt_compass.setText(mAzimuth + "°\n" + direction);
+        txt_compass.setText(direction);
         //Add direction to status bar using notifications
         showNotification(direction);
 
